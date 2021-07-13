@@ -33,6 +33,10 @@ public class AddressDirectory {
         return Optional.ofNullable(directory.get(person));
     }
 
+//    public Optional<Person> getPersons(final PersonAddressPair pap){
+//        return Optional.ofNullable(directory.getOrDefault(pap.getPerson(),address));
+//    }
+
 
     public void updateAddress(final PersonAddressPair personAddress) {
         directory.replace(personAddress.getPerson(), personAddress.getAddress());
