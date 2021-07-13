@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class PeopleAddressesTreeTest {
     private List<PersonAddressPair> addresslist;
@@ -31,7 +30,7 @@ public class PeopleAddressesTreeTest {
 
     @Test
     public void ShouldReturnAddressIfPersonExists(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist, directory);
+        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
         Person person = new Person("Jack","Oliver");
         Address address = new Address("22","Tower Hill","GU140BJ","Farnborough");
         assertEquals(Optional.of(address),addressDirectory.getAddress(person));
@@ -39,14 +38,14 @@ public class PeopleAddressesTreeTest {
 
     @Test
     public void ShouldNotReturnAddressIfPersonNotExists(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist, directory);
+        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
         Person person = new Person("Jack","Grealish");
         assertEquals(Optional.empty(),addressDirectory.getAddress(person));
     }
 
     @Test
     public void ShouldUpdatesAPersonAddressWhenExists(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist, directory);
+        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
         Person person = new Person("Jack","Oliver");
         Address newAddress = new Address("22","London Road","GU149TZ","Farnborough");
         PersonAddressPair myNewAddress = new PersonAddressPair(person,newAddress);
@@ -57,17 +56,17 @@ public class PeopleAddressesTreeTest {
 
     @Test
     public void ShouldUpdatesPersonAddressWhenPersonDoesNotExistInTheDirectory(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist, directory);
+        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
         Person person = new Person("Jack","Grealish");
         Address address = new Address("485","Victoria Road","GU148QQ","Farnborough");
         PersonAddressPair newAddress = new PersonAddressPair(person,address);
         addressDirectory.updateAddress(newAddress);
-        assertTrue(directory.containsKey(person));
+        assertEquals(addressDirectory.getAddress(person),Optional.empty());
     }
 
     @Test
     public void ShouldRemovePersonAddress(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist, directory);
+        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
         Person person = new Person("Jack","Oliver");
         addressDirectory.remove(person);
         System.out.println(addressDirectory.toString());
