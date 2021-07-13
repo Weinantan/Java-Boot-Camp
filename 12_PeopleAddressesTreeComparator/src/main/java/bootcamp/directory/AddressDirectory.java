@@ -28,9 +28,9 @@ public class AddressDirectory {
         //TODO convert addressList to a TreeMap assigned to directory.
     }
 
+
     public Optional<Address> getAddress(final Person person) {
-        //FIXME
-        return null;
+        return Optional.ofNullable(directory.get(person));
     }
 
     public void updateAddress(final PersonAddressPair personAddress) {
