@@ -2,7 +2,7 @@ package bootcamp.data;
 
 import java.util.Objects;
 
-public class Address {
+public class Address implements Comparable<Address> {
     private final String firstLine;
     private final String secondLine;
     private final String postCode;
@@ -43,5 +43,22 @@ public class Address {
     @Override
     public int hashCode() {
         return Objects.hash(firstLine, secondLine, postCode, city);
+    }
+
+    @Override
+    public int compareTo(Address address) {
+        StringBuilder LocalAddress = new StringBuilder();
+        LocalAddress.append(this.getCity().toLowerCase());
+        LocalAddress.append(this.getPostCode().toLowerCase());
+        LocalAddress.append(this.getSecondLine().toLowerCase());
+        LocalAddress.append(this.getFirstLine().toLowerCase());
+
+        StringBuilder PassedAddress = new StringBuilder();
+        PassedAddress.append(address.getCity().toLowerCase());
+        PassedAddress.append(address.getCity().toLowerCase());
+        PassedAddress.append(address.getSecondLine().toLowerCase());
+        PassedAddress.append(address.getFirstLine().toLowerCase());
+
+        return LocalAddress.compareTo(PassedAddress);
     }
 }

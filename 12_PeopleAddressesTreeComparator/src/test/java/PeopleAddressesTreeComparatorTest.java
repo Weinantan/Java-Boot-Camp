@@ -7,10 +7,11 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class PeopleAddressesTest {
+public class PeopleAddressesTreeComparatorTest {
     private List<PersonAddressPair> addresslist;
+    private TreeMap<Person,Address> directory = new TreeMap<>();
 
     @Before
     public void setUp(){
@@ -24,7 +25,6 @@ public class PeopleAddressesTest {
 
         addresslist = new ArrayList<>(Arrays.asList(new PersonAddressPair(JackOliver,address),
                 new PersonAddressPair(AmyHose,address1),new PersonAddressPair(RyanJackson,address2)));
-
 
     }
 
@@ -69,17 +69,9 @@ public class PeopleAddressesTest {
         AddressDirectory addressDirectory = new AddressDirectory(addresslist);
         Person person = new Person("Jack","Oliver");
         addressDirectory.remove(person);
+        System.out.println(addressDirectory.toString());
 
         assertEquals(Optional.empty(),addressDirectory.getAddress(person));
-    }
-
-    @Test
-    public void ShouldNotRemovePersonNotExist(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
-        Person person = new Person("Ryan323","Jackson1111111");
-        addressDirectory.remove(person);
-        assertTrue(true);
-//        assertEquals("Person not found",);
     }
 
 
