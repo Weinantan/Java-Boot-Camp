@@ -5,9 +5,6 @@ import bootcamp.process.element.ProcessingElement;
 import java.math.BigDecimal;
 
 public class Adder implements ProcessingElement {
-    public Adder(){
-    }
-
 
     @Override
     public BigDecimal process(BigDecimal x, BigDecimal y) {

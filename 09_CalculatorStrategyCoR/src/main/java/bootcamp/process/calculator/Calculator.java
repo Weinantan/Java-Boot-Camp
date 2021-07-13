@@ -3,22 +3,25 @@ package bootcamp.process.calculator;
 import bootcamp.data.Params;
 import bootcamp.data.Result;
 import bootcamp.data.Status;
-import bootcamp.process.element.ElementFactory;
+
+import bootcamp.process.element.impl.CoRFactory;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
 public class Calculator {
-    private final ElementFactory factory ;
+    private final CoRFactory factory ;
 
-    public Calculator(ElementFactory factory) {
-        this.factory = factory;
+
+    public Calculator() {
+        factory = new CoRFactory("+",new CoRFactory("-",
+                new CoRFactory("*",new CoRFactory("/"))));
     }
     //TODO Constructor to create ElementFactory Chain of Responsibility.
 
     public Result calculate(final Params params) {
         Result results = null;
-       BigDecimal answer = factory.getProcessingElement(params.getOperator()).get().process(params.getX(),params.getY());
+        BigDecimal answer = factory.getProcessingElement(params.getOperator()).get().process(params.getX(),params.getY());
 
         try{
             results = new Result(Status.SUCCESS,"",Optional.of(answer));

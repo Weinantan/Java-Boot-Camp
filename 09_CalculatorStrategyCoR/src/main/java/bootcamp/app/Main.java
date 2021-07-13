@@ -1,9 +1,8 @@
 package bootcamp.app;
 
 import bootcamp.data.Params;
+import bootcamp.data.Result;
 import bootcamp.process.calculator.Calculator;
-import bootcamp.process.element.ElementFactory;
-import bootcamp.process.element.impl.AdderFactory;
 
 import java.math.BigDecimal;
 
@@ -17,7 +16,7 @@ public class Main {
 //        System.out.println("Please Enter an Operator (+ - * /)");
 //        String operator = scanner.next();
 
-
+//
 //        Params params = new Params(x, y, operator);
 
 
@@ -27,14 +26,16 @@ public class Main {
 
         Params params = new Params(x,y,operator);
 
-        AdderFactory addFactory = new AdderFactory(operator);
         Calculator cal = new Calculator();
+        Result results = cal.calculate(params);
+        System.out.println(results.toString());
 
 
-
-
-        System.out.println("*******************************");
-        System.out.println(cal.calculate(params).getValue());
+//
+//
+//
+//        System.out.println("*******************************");
+//        System.out.println(cal.calculate(params).getValue());
 
 
     }

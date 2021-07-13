@@ -5,8 +5,6 @@ import bootcamp.process.element.ProcessingElement;
 import java.math.BigDecimal;
 
 public class Divider  implements ProcessingElement {
-    public Divider() {
-    }
 
     @Override
     public BigDecimal process(BigDecimal x, BigDecimal y) {

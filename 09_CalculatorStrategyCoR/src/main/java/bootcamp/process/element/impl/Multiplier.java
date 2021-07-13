@@ -5,8 +5,6 @@ import bootcamp.process.element.ProcessingElement;
 import java.math.BigDecimal;
 
 public class Multiplier implements ProcessingElement {
-    public Multiplier() {
-    }
 
 
     @Override
