@@ -55,7 +55,7 @@ public class Address implements Comparable<Address> {
 
         StringBuilder PassedAddress = new StringBuilder();
         PassedAddress.append(address.getCity().toLowerCase());
-        PassedAddress.append(address.getCity().toLowerCase());
+        PassedAddress.append(address.getPostCode().toLowerCase());
         PassedAddress.append(address.getSecondLine().toLowerCase());
         PassedAddress.append(address.getFirstLine().toLowerCase());
 
