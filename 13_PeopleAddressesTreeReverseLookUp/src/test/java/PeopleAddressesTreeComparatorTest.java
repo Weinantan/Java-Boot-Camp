@@ -1,6 +1,7 @@
 import bootcamp.data.Address;
 import bootcamp.data.Person;
 import bootcamp.data.PersonAddressPair;
+import bootcamp.data.Status;
 import bootcamp.directory.AddressDirectory;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,70 +9,122 @@ import org.junit.Test;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PeopleAddressesTreeComparatorTest {
     private List<PersonAddressPair> addresslist;
-    private TreeMap<Person,Address> directory = new TreeMap<>();
+    AddressDirectory directory;
 
     @Before
     public void setUp(){
-        Person JackOliver = new Person("Jack","Oliver");
-        Person AmyHose = new Person("Amy","Hose");
-        Person RyanJackson = new Person("Ryan","Jackson");
+        addresslist = new ArrayList<>();
+        addresslist.add(new PersonAddressPair(new Person("Wayne","Tan"),new Address("first line1","second line 1", "ABC1", "city1" )));
+        addresslist.add(new PersonAddressPair(new Person("Wayne2","Tan2"),new Address("first line1","second line 1", "ABC1", "city1" )));
+        addresslist.add(new PersonAddressPair(new Person("Wayne3","Tan3"),new Address("first line1","second line 1", "ABC1", "city1" )));
 
-        Address address = new Address("22","Tower Hill","GU140BJ","Farnborough");
-        Address address1 = new Address("46","Cove Road","GU140EN","Farnborough");
-        Address address2= new Address("115","Cove Road","GU140EN","Farnborough");
+        addresslist.add(new PersonAddressPair(new Person("Jack","Grealish"),new Address("first line2","second line 2", "ABC2", "city2" )));
+        addresslist.add(new PersonAddressPair(new Person("Harry","Kane"),new Address("first line3","second line 3", "ABC3", "city3" )));
+        addresslist.add(new PersonAddressPair(new Person("Jordan","Pickford"),new Address("first line4","second line 4", "ABC4", "city4" )));
 
-        addresslist = new ArrayList<>(Arrays.asList(new PersonAddressPair(JackOliver,address),
-                new PersonAddressPair(AmyHose,address1),new PersonAddressPair(RyanJackson,address2)));
-
+        directory = new AddressDirectory(addresslist);
     }
 
     @Test
     public void ShouldReturnAddressIfPersonExists(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
-        Person person = new Person("Jack","Oliver");
-        Address address = new Address("22","Tower Hill","GU140BJ","Farnborough");
-        assertEquals(Optional.of(address),addressDirectory.getAddress(person));
+       Address address = directory.getAddress(new Person("Wayne","Tan")).get();
+       assertEquals(new Address("first line1","second line 1", "ABC1", "city1" ),address);
     }
 
     @Test
     public void ShouldNotReturnAddressIfPersonNotExists(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
-        Person person = new Person("Jack","Grealish");
-        assertEquals(Optional.empty(),addressDirectory.getAddress(person));
+        Person person = new Person("Jordan","Sanchos");
+        assertEquals(Optional.empty(),directory.getAddress(person));
     }
 
     @Test
     public void ShouldUpdatesAPersonAddressWhenExists(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
-        Person person = new Person("Jack","Oliver");
+
+        Person person = new Person("Jack","Grealish");
         Address newAddress = new Address("22","London Road","GU149TZ","Farnborough");
         PersonAddressPair myNewAddress = new PersonAddressPair(person,newAddress);
-        addressDirectory.updateAddress(myNewAddress);
-        assertEquals(Optional.of(newAddress),addressDirectory.getAddress(person));
+        directory.updateAddress(myNewAddress);
+        assertEquals(Optional.of(newAddress),directory.getAddress(person));
 
     }
 
     @Test
     public void ShouldUpdatesPersonAddressWhenPersonDoesNotExistInTheDirectory(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
-        Person person = new Person("Jack","Grealish");
-        Address address = new Address("485","Victoria Road","GU148QQ","Farnborough");
-        PersonAddressPair newAddress = new PersonAddressPair(person,address);
-        addressDirectory.updateAddress(newAddress);
-        assertEquals(addressDirectory.getAddress(person),Optional.empty());
+        //Laura's code
+            Person person = new Person("No Person", "Baker");
+            Address newAddress = new Address("line1B", "", "", "");
+            List<Person> peopleBefore = directory.getPersonAtAddress(newAddress);
+            assertEquals(false, peopleBefore.contains(person));
+            directory.updateAddress(new PersonAddressPair(person, newAddress));
+            List<Person> peopleAfter = directory.getPersonAtAddress(newAddress);
+            assertEquals(true, peopleAfter.contains(person));
+            assertTrue(directory.getPersonAtAddress(newAddress).contains(person));
     }
 
     @Test
     public void ShouldRemovePersonAddress(){
-        AddressDirectory addressDirectory = new AddressDirectory(addresslist);
-        Person person = new Person("Jack","Oliver");
-        addressDirectory.remove(person);
-        System.out.println(addressDirectory.toString());
+        Person person = new Person("Wayne", "Tan");
+        assertEquals(Status.SUCCESS, directory.remove(person));
+    }
 
-        assertEquals(Optional.empty(),addressDirectory.getAddress(person));
+
+    // Tests after the reverse Look up implementation.
+    @Test
+    public void ShouldReturnAllPeopleAtAnAddress() {
+        Address address = new Address("first line1","second line 1", "ABC1", "city1" );
+        //3 people lives at "address"
+        List<Person> result = directory.getPersonAtAddress(address);
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    public void ShouldReturnEmptyListForNonexistentAddress() {
+        Address address = new Address("12das","dasd line 1", "ABC1", "Farnborough" );
+        List<Person> result = directory.getPersonAtAddress(address);
+        assertEquals(true, result.isEmpty());
+    }
+
+
+    @Test
+    public void ShouldReturnKeyNotFoundForNonExistingAddressUpdate() {
+        Address newAddress = new Address("Not a real address","Not a real address line 1", "ABC1", "city1" );
+        Address oldAddress = new Address("Not a real address","Not a real address", "Not a real address", "Not a real address" );
+        assertEquals(Status.FAILED_NO_KEY_FOUND, directory.updateAddress(oldAddress, newAddress));
+    }
+
+
+    @Test
+    public void ShouldRemoveAddressAndCorrespondingPeople() {
+        Address address = new Address("first line1","second line 1", "ABC1", "city1" );
+        assertEquals(Status.SUCCESS, directory.remove(address));
+        assertTrue(directory.getPersonAtAddress(address).isEmpty());
+
+    }
+    @Test
+    public void ShouldReturnKeyNotFoundForNonExistingAddressRemove() {
+        Address address = new Address("Non existing","Not a real address", "Not a real address", "Not a real address" );
+        assertEquals(Status.FAILED_NO_KEY_FOUND, directory.remove(address));
+
+    }
+
+
+    // Source Code From Laura
+    @Test
+    public void ShouldUpdateAddressForAllResidents_Success() {
+        Address newAddress = new Address("first line12345","second line 1", "ABC1", "city1" );
+        Address oldAddress = new Address("first line1","second line 1", "ABC1", "city1" );
+        List<Person> oldResidents = directory.getPersonAtAddress(oldAddress);
+        assertEquals(Status.SUCCESS,directory.updateAddress(oldAddress, newAddress));
+        List<Person> newResidents = directory.getPersonAtAddress(newAddress);
+        assertEquals(oldResidents.size(), newResidents.size());
+        assertTrue(directory.getPersonAtAddress(oldAddress).isEmpty());
+        for (Person person: oldResidents) {
+            assertEquals(directory.getAddress(person).get(), newAddress);
+        }
     }
 
 
