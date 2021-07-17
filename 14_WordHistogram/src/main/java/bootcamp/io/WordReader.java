@@ -2,6 +2,7 @@ package bootcamp.io;
 
 import bootcamp.data.Result;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -12,5 +13,5 @@ public abstract class WordReader {
         this.inStream = inStream;
     }
 
-    public abstract Result<List<String>> getWords();
+    public abstract Result<List<String>> getWords() throws IOException;
 }
