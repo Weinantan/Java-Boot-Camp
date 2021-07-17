@@ -31,8 +31,6 @@ public class ReadingWords extends WordReader {
             Collections.addAll(list, str);
             line=br.readLine();
         }
-
-
 //        String[] str =line.split(" ");
 //        list = Arrays.asList(str);
 
