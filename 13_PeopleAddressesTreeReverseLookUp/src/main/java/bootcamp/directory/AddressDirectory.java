@@ -52,7 +52,7 @@ public class AddressDirectory {
             updateAddress(new PersonAddressPair(iterator.next(), newAddress));
         }
 
-        //sort out the address dir
+        //sort out the address dir update the new address and get rid of the old address.
         addressDirectory.put(newAddress,addressDirectory.get(oldAddress));
         addressDirectory.remove(oldAddress);
         return Status.SUCCESS;
