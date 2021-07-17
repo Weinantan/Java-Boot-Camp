@@ -1,17 +1,21 @@
+package test.java;
+
 import bootcamp.data.Address;
 import bootcamp.data.Person;
 import bootcamp.data.PersonAddressPair;
 import bootcamp.data.Status;
-import bootcamp.directory.AddressDirectory;
+import main.java.bootcamp.directory.AddressDirectory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class PeopleAddressesTreeComparatorTest {
+public class PeopleAddressesReverseLookUpTest {
     private List<PersonAddressPair> addresslist;
     AddressDirectory directory;
 

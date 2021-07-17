@@ -1,4 +1,4 @@
-package bootcamp.directory;
+package main.java.bootcamp.directory;
 
 import bootcamp.data.Address;
 import bootcamp.data.Person;
@@ -47,9 +47,8 @@ public class AddressDirectory {
 
         List<Person> allThePeopleToBeUpdated = addressDirectory.get(oldAddress);
         //This give you a list of persons that have the same address.
-        Iterator<Person> iterator = allThePeopleToBeUpdated.iterator();
-        while (iterator.hasNext()){
-            updateAddress(new PersonAddressPair(iterator.next(), newAddress));
+        for (Person person : allThePeopleToBeUpdated) {
+            updateAddress(new PersonAddressPair(person, newAddress));
         }
 
         //sort out the address dir update the new address and get rid of the old address.
@@ -82,7 +81,7 @@ public class AddressDirectory {
 
 
     public List<Person> getPersonAtAddress(final Address address){
-        return addressDirectory.get(address)!= null ? addressDirectory.get(address) : new ArrayList<Person>();
+        return addressDirectory.get(address)!= null ? addressDirectory.get(address) : new ArrayList<>();
     }
 
 
@@ -111,13 +110,7 @@ public class AddressDirectory {
         peopleDirectory.remove(person);
 
         //now to do it for address dir
-        addressDirectory.forEach((a,p) ->{
-            Iterator<Person> iterator = p.iterator();
-            while (iterator.hasNext()){
-                if (person.equals(iterator.next()))
-                    iterator.remove();
-            }
-        });
+        addressDirectory.forEach((a,p) -> p.removeIf(person::equals));
         return Status.SUCCESS;
     }
 
