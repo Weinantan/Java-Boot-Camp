@@ -2,10 +2,12 @@ package bootcamp.data;
 
 import bootcamp.io.HistogramWriter;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Optional;
 
 public class WritingClass extends HistogramWriter {
     public WritingClass(OutputStream outStream) {
@@ -23,10 +25,11 @@ public class WritingClass extends HistogramWriter {
                 bw.newLine();
             } catch (IOException e) {
                 e.printStackTrace();
+                return new Result<>(Status.IO_EXCEPTION,"Writing error");
             }
         }
 
-        return new Result<>(Optional.empty());
+        return new Result<>();
 
     }
 }
