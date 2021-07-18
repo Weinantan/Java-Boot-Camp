@@ -1,10 +1,19 @@
 package bootcamp.process.element.impl;
 
+import bootcamp.process.element.ElementFactory;
 import bootcamp.process.element.ProcessingElement;
 
 import java.math.BigDecimal;
 
-public class Divider  implements ProcessingElement {
+public class Divider  extends ElementFactory implements ProcessingElement {
+
+    public Divider(String operator, ElementFactory nextFactory) {
+        super(operator, nextFactory);
+    }
+
+    public Divider(String operator) {
+        super(operator);
+    }
 
     @Override
     public BigDecimal process(BigDecimal x, BigDecimal y) {
@@ -15,5 +24,9 @@ public class Divider  implements ProcessingElement {
         }
     }
 
+    @Override
+    public ProcessingElement getProcessingElement() {
+        return this ;
+    }
 }
 

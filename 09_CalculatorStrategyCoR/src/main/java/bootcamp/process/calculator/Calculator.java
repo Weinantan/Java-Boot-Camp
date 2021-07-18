@@ -3,20 +3,25 @@ package bootcamp.process.calculator;
 import bootcamp.data.Params;
 import bootcamp.data.Result;
 import bootcamp.data.Status;
-
-import bootcamp.process.element.impl.CoRFactory;
+import bootcamp.process.element.ElementFactory;
+import bootcamp.process.element.impl.Adder;
+import bootcamp.process.element.impl.Divider;
+import bootcamp.process.element.impl.Multiplier;
+import bootcamp.process.element.impl.Subtractor;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
 public class Calculator {
-    private final CoRFactory factory ;
+    private final ElementFactory factory ;
 
 
     public Calculator() {
-        factory = new CoRFactory("+",new CoRFactory("-",
-                new CoRFactory("*",new CoRFactory("/"))));
+        factory = new Adder("+",new Subtractor("-",
+                new Multiplier("*",new Divider("/"))));
     }
+
+
     //TODO Constructor to create ElementFactory Chain of Responsibility.
 
     public Result calculate(final Params params) {
