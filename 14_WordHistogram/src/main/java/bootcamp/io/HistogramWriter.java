@@ -12,5 +12,9 @@ public abstract class HistogramWriter {
         this.outStream = outStream;
     }
 
+    public OutputStream getOutStream() {
+        return outStream;
+    }
+
     public abstract Result<?> writeHistogram(final Map<String, Integer> histogram);
 }

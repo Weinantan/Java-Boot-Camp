@@ -25,7 +25,7 @@ public class Calculator {
     //TODO Constructor to create ElementFactory Chain of Responsibility.
 
     public Result calculate(final Params params) {
-        Result results = null;
+        Result results;
         BigDecimal answer = factory.getProcessingElement(params.getOperator()).get().process(params.getX(),params.getY());
 
         try{

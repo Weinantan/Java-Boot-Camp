@@ -5,9 +5,9 @@ import bootcamp.process.element.ProcessingElement;
 import java.util.Map;
 import java.util.Optional;
 
-public class ElementFactory extends bootcamp.process.element.ElementFactory {
+public class MapFactory extends bootcamp.process.element.ElementFactory {
 
-    public ElementFactory(Map<String, ProcessingElement> elementMap) {
+    public MapFactory(Map<String, ProcessingElement> elementMap) {
         super(elementMap);
     }
 
