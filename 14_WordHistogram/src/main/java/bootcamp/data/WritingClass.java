@@ -3,6 +3,8 @@ package bootcamp.data;
 import bootcamp.io.HistogramWriter;
 
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class WritingClass extends HistogramWriter {
@@ -12,6 +14,7 @@ public class WritingClass extends HistogramWriter {
 
     @Override
     public Result<?> writeHistogram(Map<String, Integer> histogram) {
-        return null;
+        OutputStreamWriter osw = new OutputStreamWriter(getOutStream(), StandardCharsets.UTF_8);
+
     }
 }
