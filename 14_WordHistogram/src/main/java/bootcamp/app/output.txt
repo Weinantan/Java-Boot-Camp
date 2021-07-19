@@ -1,0 +1,13 @@
+a : 2
+haha : 2
+read : 2
+this : 2
+i : 2
+is : 2
+do : 2
+put : 2
+not : 2
+file : 2
+what : 2
+know : 2
+to : 4

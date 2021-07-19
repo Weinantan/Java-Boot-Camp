@@ -2,5 +2,6 @@ package bootcamp.data;
 
 public enum Status {
     SUCCESS,
-    IO_EXCEPTION
+    IO_EXCEPTION,
+    FAILED
 }

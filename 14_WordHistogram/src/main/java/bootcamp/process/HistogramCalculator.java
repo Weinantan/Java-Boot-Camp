@@ -9,7 +9,6 @@ public class HistogramCalculator {
         //TODO implement
         //Set up a map.
         //loop through the list, and count the occurrence.
-
        Map<String,Integer> map = new HashMap<>();
         for (String s : words){
             Integer x = map.get(s);
