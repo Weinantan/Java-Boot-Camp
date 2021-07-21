@@ -1,24 +1,33 @@
 package bootcamp.process.element.impl;
-
 import bootcamp.process.element.ProcessingElement;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+
+import java.math.BigDecimal;
 
 // TODO this is a configuration class.
 // TODO this needs to scan components in the relevant package(s).
 // TODO factory methods to be annotated as Bean
+
+@ComponentScan(basePackages =  "bootcamp.process.calculator")
 public class ElementFactory {
-    ProcessingElement adder() {
-        return (x, y) -> x.add(y);
+    @Bean
+    public ProcessingElement adder() {
+        return BigDecimal::add;
     }
 
-    ProcessingElement subtractor() {
-        return (x, y) -> x.subtract(y);
+    @Bean
+    public ProcessingElement subtractor() {
+        return BigDecimal::subtract;
     }
 
-    ProcessingElement multiplier() {
-        return (x, y) -> x.multiply(y);
+    @Bean
+    public ProcessingElement multiplier() {
+        return BigDecimal::multiply;
     }
 
-    ProcessingElement divider() {
-        return (x, y) -> x.divide(y);
+    @Bean
+    public ProcessingElement divider() {
+        return BigDecimal::divide;
     }
 }

@@ -2,26 +2,52 @@ package bootcamp.process.calculator;
 
 import bootcamp.data.Params;
 import bootcamp.data.Result;
+import bootcamp.data.Status;
 import bootcamp.process.element.ProcessingElement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+
 
 // TODO this is a Component
+@Component
 public class Calculator {
-    private final ProcessingElement adder = null; //FIXME
-    private final ProcessingElement subtractor = null; //FIXME
-    private final ProcessingElement multiplier = null; //FIXME
-    private final ProcessingElement divider = null; //FIXME
 
-    // TODO Calculator to be autowired to inject ProcessingElements
-    public Calculator(/* TODO Use qualifier to get adder by name */ ProcessingElement adder,
-            /* TODO Use qualifier to get subtractor by name */ ProcessingElement subtractor,
-            /* TODO Use qualifier to get multiplier by name */ ProcessingElement multiplier,
-            /* TODO Use qualifier to get divider by name */ ProcessingElement divider) {
-        // TODO assign and initialise processing elements.
+    private final ProcessingElement adder;
+    private final ProcessingElement subtractor;
+    private final ProcessingElement multiplier;
+    private final ProcessingElement divider;
+
+    @Autowired
+    public Calculator(@Qualifier("adder") ProcessingElement adder, @Qualifier("subtractor") ProcessingElement subtractor, @Qualifier("multiplier") ProcessingElement multiplier, @Qualifier("divider") ProcessingElement divider) {
+        this.adder = adder;
+        this.subtractor = subtractor;
+        this.multiplier = multiplier;
+        this.divider = divider;
     }
-
 
     public Result calculate(final Params params) {
-        // TODO select the processing element using the operator and process the operands.
-        return null;
+        //We are just assuming that the returned numbers are the correct answers. What if it returned null? or returned NaN
+        //need to think of a way to improve this.
+        switch (params.getOperator()) {
+            case "+":
+                return new Result(Status.SUCCESS, "", Optional.of(adder.apply(params.getX(), params.getY())));
+            case "-" :
+                return new Result(Status.SUCCESS, "", Optional.of(subtractor.apply(params.getX(), params.getY())));
+            case "*":
+                return new Result(Status.SUCCESS, "", Optional.of(multiplier.apply(params.getX(), params.getY())));
+            case "/":
+                try{
+                    return new Result(Status.SUCCESS, "", Optional.of(divider.apply(params.getX(), params.getY())));
+                }catch (ArithmeticException e) {
+                    return new Result(Status.ARITHMETIC_ERROR, "Cannot divided by 0", Optional.empty());
+                }
+            default:
+                return new Result(Status.INVALID_OPERATION,"Please Enter + - * /", Optional.empty());
+        }
     }
+
 }
+
