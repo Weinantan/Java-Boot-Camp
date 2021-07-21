@@ -33,10 +33,17 @@ public class Calculator {
         //need to think of a way to improve this.
         switch (params.getOperator()) {
             case "+":
-            case "-" :
-            case "*":
-            case "/":
                 return new Result(Status.SUCCESS, "", Optional.of(adder.apply(params.getX(), params.getY())));
+            case "-" :
+                return new Result(Status.SUCCESS, "", Optional.of(subtractor.apply(params.getX(), params.getY())));
+            case "*":
+                return new Result(Status.SUCCESS, "", Optional.of(multiplier.apply(params.getX(), params.getY())));
+            case "/":
+                try{
+                    return new Result(Status.SUCCESS, "", Optional.of(divider.apply(params.getX(), params.getY())));
+                }catch (ArithmeticException e) {
+                    return new Result(Status.ARITHMETIC_ERROR, "Cannot divided by 0", Optional.empty());
+                }
             default:
                 return new Result(Status.INVALID_OPERATION,"Please Enter + - * /", Optional.empty());
         }
