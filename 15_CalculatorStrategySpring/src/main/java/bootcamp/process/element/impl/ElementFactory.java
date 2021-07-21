@@ -11,19 +11,25 @@ import java.math.BigDecimal;
 
 @Configuration
 @ComponentScan
+
 public class ElementFactory {
+
+
     @Bean
     public ProcessingElement adder() {
         return BigDecimal::add;
     }
+
     @Bean
     public ProcessingElement subtractor() {
         return BigDecimal::subtract;
     }
+
     @Bean
     public ProcessingElement multiplier() {
         return BigDecimal::multiply;
     }
+
     @Bean
     public ProcessingElement divider() {
         return BigDecimal::divide;
