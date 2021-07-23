@@ -2,12 +2,14 @@ package bootcamp.reader;
 
 import bootcamp.data.*;
 import bootcamp.db.AddressRowMapper;
+import bootcamp.db.PersonRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class AddressDirectory {
@@ -18,11 +20,18 @@ public class AddressDirectory {
         this.template = template;
     }
 
+    /**
+     * TODO
+     * 1. If no address is returned, return the result with appropriate status and message.
+     * 2. If address is returned, use the ID to create the parameters map for person query.
+     * 3. Execute the query to get a list of people in the address.
+     * 4. Package the results in the Residents object and return a Result instance.
+     * 5. In case of errors, return an appropriate Result instance.
+     */
     public Result<Residents> getResidents(final Address address) {
         final String addressSql = "SELECT * FROM ADDRESS WHERE LINE_1 = :firstLine AND LINE_2 = :secondLine " +
                 "AND CITY = :city AND POST_CODE = :postCode";
         final String personSql = "SELECT * FROM PERSON WHERE ADDRESS_ID = :addressId";
-
         final Map<String, String> addressParams = Map.of(
                 "firstLine", address.getFirstLine(),
                 "secondLine", address.getSecondLine(),
@@ -30,30 +39,25 @@ public class AddressDirectory {
                 "postCode", address.getPostCode());
 
         final List<Address> addressFromDb = template.query(addressSql, addressParams, new AddressRowMapper());
-
-
         if (addressFromDb ==null){
             return new Result<>(Status.INVALID_OPERATION);
-        }else {
-
         }
+        final Map<String, Optional<Integer>>personParams = Map.of(
+                "addressId",addressFromDb.get(0).getId());
+        final List<Person> residentsFromDB = template.query(personSql,personParams,new PersonRowMapper());
 
-
-        /**
-         * TODO
-         * 1. If no address is returned, return the result with appropriate status and message.
-         * 2. If address is returned, use the ID to create the parameters map for person query.
-         * 3. Execute the query to get a list of people in the address.
-         * 4. Package the results in the Residents object and return a Result instance.
-         * 5. In case of errors, return an appropriate Result instance.
-         */
-
-        return null; //FIXME
+        if (residentsFromDB == null){
+            return new Result<>(Status.INVALID_OPERATION);
+        }else{
+            return new Result<>(Optional.of(new Residents(address,residentsFromDB)));
+        }
     }
 
     public Result<PersonAddressPair> getAddress(final Person person) {
         final String personSql = "SELECT * FROM PERSON WHERE FIRST_NAME = :firstName AND SECOND_NAME = :secondName";
         final String addressSql = "SELECT * FROM ADDRESS WHERE ID = :addressId";
+
+
 
         /**
          * TODO

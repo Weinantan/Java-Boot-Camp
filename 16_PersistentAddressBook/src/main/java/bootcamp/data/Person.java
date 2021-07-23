@@ -26,6 +26,7 @@ public class Person {
         this.secondName = getSecondName();
     }
 
+
     //TODO 2 constructors, one as query for a person containing only first and second names and the second for the
     // response to the query, containing the IDs from the database.
     //TODO getters.
