@@ -31,6 +31,14 @@ public class AddressDirectory {
 
         final List<Address> addressFromDb = template.query(addressSql, addressParams, new AddressRowMapper());
 
+
+        if (addressFromDb ==null){
+            return new Result<>(Status.INVALID_OPERATION);
+        }else {
+
+        }
+
+
         /**
          * TODO
          * 1. If no address is returned, return the result with appropriate status and message.
