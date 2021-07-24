@@ -16,4 +16,12 @@ public class PersonAddressPair {
     public Address getAddress() {
         return this.address;
     }
+
+    @Override
+    public String toString() {
+        return "PersonAddressPair{" +
+                "person=" + person +
+                ", address=" + address +
+                '}';
+    }
 }
