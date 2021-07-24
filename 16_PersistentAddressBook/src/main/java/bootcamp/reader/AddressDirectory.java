@@ -39,13 +39,15 @@ public class AddressDirectory {
                 "postCode", address.getPostCode());
 
         final List<Address> addressFromDb = template.query(addressSql, addressParams, new AddressRowMapper());
-        if (addressFromDb ==null){
+
+        if (addressFromDb.size() == 0){
             return new Result<>(Status.INVALID_OPERATION);
         }
-        final Map<String, Optional<Integer>>personParams = Map.of(
-                "addressId",addressFromDb.get(0).getId());
-        final List<Person> residentsFromDB = template.query(personSql,personParams,new PersonRowMapper());
 
+        final Map<String, Integer> personParams = Map.of(
+                "addressId",addressFromDb.get(0).getId().get());
+//        Optional<Integer> addressId = addressFromDb.get(0).getId();
+        final List<Person> residentsFromDB = template.query(personSql,personParams,new PersonRowMapper());
         if (residentsFromDB == null){
             return new Result<>(Status.INVALID_OPERATION);
         }else{
@@ -53,9 +55,21 @@ public class AddressDirectory {
         }
     }
 
+
+
     public Result<PersonAddressPair> getAddress(final Person person) {
         final String personSql = "SELECT * FROM PERSON WHERE FIRST_NAME = :firstName AND SECOND_NAME = :secondName";
         final String addressSql = "SELECT * FROM ADDRESS WHERE ID = :addressId";
+
+        final Map<String, String> personParams = Map.of(
+                "firstName",person.getFirstName(),
+                "secondName",person.getSecondName());
+
+        List<Person> personFromDB = template.query(personSql,personParams,new PersonRowMapper());
+        if (personFromDB ==null){
+             return new Result<>(Status.INVALID_OPERATION);
+        }
+
 
 
 

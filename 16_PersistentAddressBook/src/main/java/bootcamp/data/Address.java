@@ -59,4 +59,14 @@ public class Address {
     public Optional<Integer> getId() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "firstLine='" + firstLine + '\'' +
+                ", secondLine='" + secondLine + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
 }

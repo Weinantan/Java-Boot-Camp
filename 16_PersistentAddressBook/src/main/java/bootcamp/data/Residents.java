@@ -19,6 +19,14 @@ public class Residents {
         return residents;
     }
 
+    @Override
+    public String toString() {
+        return "Residents{" +
+                "address=" + address +
+                ", residents=" + residents +
+                '}';
+    }
+
     //TODO Constructor
     //TODO Getters
 }

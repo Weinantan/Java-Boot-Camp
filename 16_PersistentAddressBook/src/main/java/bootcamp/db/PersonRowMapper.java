@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class PersonRowMapper implements RowMapper<Person> {
 
@@ -12,8 +13,8 @@ public class PersonRowMapper implements RowMapper<Person> {
     public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
         final String firstName = rs.getString("FIRST_NAME");
         final String secondName = rs.getString("LAST_NAME");
-//        final int id  = rs.getInt("ID");
-//        final int address_id = rs.getInt("ADDRESS_ID");
-        return new Person(firstName,secondName);
+        final int id  = rs.getInt("ID");
+        final int address_id = rs.getInt("ADDRESS_ID");
+        return new Person(firstName,secondName,Optional.of(id),Optional.of(address_id));
     }
 }

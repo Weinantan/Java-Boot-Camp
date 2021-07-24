@@ -23,7 +23,7 @@ public class Result<T> {
     //Indicating error
     public Result(Status status) {
         this.status = status;
-        this.statusMessage = "Error";
+        this.statusMessage = "No such an record found";
         this.value = Optional.empty();
     }
 
@@ -39,6 +39,14 @@ public class Result<T> {
         return value;
     }
 
-    //TODO Constructor. If there was an error in processing, set the relevant status, message and value to empty Optional.
+    @Override
+    public String toString() {
+        return "Result{" +
+                "status=" + status +
+                ", statusMessage='" + statusMessage + '\'' +
+                ", value=" + value +
+                '}';
+    }
+//TODO Constructor. If there was an error in processing, set the relevant status, message and value to empty Optional.
     //TODO Getters
 }

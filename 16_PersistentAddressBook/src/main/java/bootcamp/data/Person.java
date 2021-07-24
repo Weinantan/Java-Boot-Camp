@@ -10,6 +10,13 @@ public class Person {
     private final Optional<Integer> addressId ;
 
 
+    public Person(String firstName, String secondName, Optional<Integer> id, Optional<Integer> addressId) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.id = id;
+        this.addressId = addressId;
+    }
+
     //One as query for a person containing only first and second names;
     public Person(String firstName, String secondName) {
         this.firstName = firstName;
@@ -25,6 +32,7 @@ public class Person {
         this.firstName = getFirstName();
         this.secondName = getSecondName();
     }
+
 
 
     //TODO 2 constructors, one as query for a person containing only first and second names and the second for the
@@ -62,5 +70,13 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(firstName, secondName, id, addressId);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                '}';
     }
 }
