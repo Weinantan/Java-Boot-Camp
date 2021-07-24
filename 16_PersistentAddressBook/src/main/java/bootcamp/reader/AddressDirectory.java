@@ -46,7 +46,6 @@ public class AddressDirectory {
 
         final Map<String, Integer> personParams = Map.of(
                 "addressId",addressFromDb.get(0).getId().get());
-
 //        Optional<Integer> addressId = addressFromDb.get(0).getId();
         final List<Person> residentsFromDB = template.query(personSql,personParams,new PersonRowMapper());
         if (residentsFromDB.size() == 0){
