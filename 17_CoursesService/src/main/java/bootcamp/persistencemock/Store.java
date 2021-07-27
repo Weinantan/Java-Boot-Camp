@@ -2,13 +2,14 @@ package bootcamp.persistencemock;
 
 import bootcamp.model.Course;
 import bootcamp.model.Student;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+@Service
 public class Store {
     private final List<Student> students;
     private final List<Course> courses;
@@ -53,6 +54,7 @@ public class Store {
 
     public Student getStudent(final int id) throws NotFoundException {
         final Optional<Student> student = students.stream().filter(x -> x.getId() == id).findFirst();
+        System.out.println("Student" + student);
         if (student.isEmpty()) throw new NotFoundException(id, "Student");
         return student.get();
     }

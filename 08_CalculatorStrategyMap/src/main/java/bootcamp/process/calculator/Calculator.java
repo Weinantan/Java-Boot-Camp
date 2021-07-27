@@ -29,7 +29,6 @@ public class Calculator {
             results = new Result(Status.INVALID_OPERATION,"Please Enter + - * /", Optional.empty());
         }
         return results;
-
     }
 
 

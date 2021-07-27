@@ -2,21 +2,28 @@ package bootcamp.controller;
 
 import bootcamp.model.Student;
 import bootcamp.persistencemock.NotFoundException;
+import bootcamp.persistencemock.Store;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CourseController {
-    // TODO Add the following methods
-//    @RequestMapping(value="/assign",method = RequestMethod.POST);
-//    public void assign(@RequestBody Assignment assignment) throws NotFoundException {
-//
-//    }
-    @RequestMapping("/students{id}");
+    @Autowired
+  Store store;
+
+    @RequestMapping
+    @GetMapping("/students/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable("id") final int id) throws NotFoundException{
-        return
+        Student student = store.getStudent(id);
+        if (student ==null){
+            throw new NotFoundException(id,id + "Not found");
+        }
+        return new ResponseEntity<>(student,HttpStatus.OK);
     }
 
     // TODO 1. Method to get all the students (Method = GET : Request mapping = /students : HTTP Response OK/200)

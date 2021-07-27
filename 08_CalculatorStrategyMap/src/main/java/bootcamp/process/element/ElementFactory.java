@@ -8,6 +8,7 @@ public abstract class ElementFactory {
 
     public ElementFactory(Map<String, ProcessingElement> elementMap) {
         this.elementMap = elementMap;
+
     }
 
     public abstract Optional<ProcessingElement> create(final String operator);
