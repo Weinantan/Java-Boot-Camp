@@ -1,8 +1,11 @@
 package bootcamp.persistencemock;
 
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Service
 public class CourseToStudentMap {
     private Map<Integer, Set<Integer>> map;
 
@@ -25,7 +28,7 @@ public class CourseToStudentMap {
     public Optional<Set<Integer>> getCoursesForAStudent(final int studentId) {
         final Set<Integer> courseIds = map.entrySet().stream().
                 filter(entry -> entry.getValue().contains(studentId)).
-                map(entry -> entry.getKey()).
+                map(Map.Entry::getKey).
                 collect(Collectors.toSet());
 
         return courseIds.isEmpty() ? Optional.empty() : Optional.of(courseIds);

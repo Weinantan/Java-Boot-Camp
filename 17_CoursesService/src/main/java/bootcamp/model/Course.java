@@ -16,4 +16,11 @@ public class Course {
     public String getTitle() {
         return this.title;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "title='" + title + '\'' +
+                '}';
+    }
 }

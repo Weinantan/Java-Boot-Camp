@@ -54,7 +54,6 @@ public class Store {
 
     public Student getStudent(final int id) throws NotFoundException {
         final Optional<Student> student = students.stream().filter(x -> x.getId() == id).findFirst();
-        System.out.println("Student" + student);
         if (student.isEmpty()) throw new NotFoundException(id, "Student");
         return student.get();
     }
@@ -85,21 +84,22 @@ public class Store {
         getCourse(courseId); // Just to check if the course exists
         Optional<Set<Integer>> studentIds = courseMap.getStudentsInACourse(courseId);
         return studentIds.isEmpty()?
-                new ArrayList<Student>() :
-                studentIds.get().stream().map(x -> getStudentInternal(x)).collect(Collectors.toList());
+                new ArrayList<>() :
+                studentIds.get().stream().map(this::getStudentInternal).collect(Collectors.toList());
     }
 
     public List<Course> getCoursesForAStudent(final int studentId) throws NotFoundException {
         getStudent(studentId); // Just to check if the student exists
         Optional<Set<Integer>> courseIds = courseMap.getCoursesForAStudent(studentId);
         return courseIds.isEmpty() ?
-                new ArrayList<Course>() :
-                courseIds.get().stream().map(x -> getCourseInternal(x)).collect(Collectors.toList());
+                new ArrayList<>() :
+                courseIds.get().stream().map(this::getCourseInternal).collect(Collectors.toList());
     }
 
     public void assignStudentToACourse(final int studentId, final int courseId) throws NotFoundException {
         getStudent(studentId);
         getCourse(courseId);
+        System.out.println(getStudent(studentId) + " " + "Assigned to" + getCourse(courseId));
         courseMap.addStudent(courseId, studentId);
     }
  }

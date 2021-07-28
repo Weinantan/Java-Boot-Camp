@@ -16,4 +16,12 @@ public class Assignment {
     public int getCourseId() {
         return this.courseId;
     }
+
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "studentId=" + studentId +
+                ", courseId=" + courseId +
+                '}';
+    }
 }
