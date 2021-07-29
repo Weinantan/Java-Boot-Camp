@@ -1,31 +1,32 @@
 package bootcamp.process.element.impl;
 
+import bootcamp.process.element.ElementFactory;
 import bootcamp.process.element.ProcessingElement;
 
-import java.util.Map;
 import java.util.Optional;
 
-public class MapFactory extends bootcamp.process.element.ElementFactory {
-
-    public MapFactory(Map<String, ProcessingElement> elementMap) {
-        super(elementMap);
-    }
-
-
+public class MapFactory extends ElementFactory {
 
     @Override
     public Optional<ProcessingElement> create(String operator) {
-        if (operator.equals("+")) {
-           return Optional.ofNullable(elementMap.put("+",new Adder()));
-        } else if (operator.equals("-")) {
-            return Optional.ofNullable(elementMap.put("-",new Subtractor()));
-        } else if (operator.equals("*")) {
-            return Optional.ofNullable(elementMap.put("*",new Multiplier()));
-        } else if (operator.equals("/")) {
-            return Optional.ofNullable(elementMap.put("/",new Divider()));
-        } else {
-            return Optional.empty();
+        switch(operator){
+            case "+" : {
+              return Optional.ofNullable(elementMap.get("Adder"));
+            }
+            case "-" : {
+                return Optional.ofNullable(elementMap.get("Subtractor"));
+            }
+            case "*" : {
+                return Optional.ofNullable(elementMap.get("Multiplier"));
+            }
+            case "/" : {
+                return Optional.ofNullable(elementMap.get("Divider"));
+            }
+            default:
+                return Optional.empty();
         }
+    }
+
     }
 
 //    @Override
@@ -43,4 +44,4 @@ public class MapFactory extends bootcamp.process.element.ElementFactory {
 //            return Optional.empty();
 //        }
 //    }
-}
+

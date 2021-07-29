@@ -1,14 +1,23 @@
 package bootcamp.process.element;
 
+import bootcamp.process.element.impl.Adder;
+import bootcamp.process.element.impl.Divider;
+import bootcamp.process.element.impl.Multiplier;
+import bootcamp.process.element.impl.Subtractor;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public abstract class ElementFactory {
     protected final Map<String, ProcessingElement> elementMap ;
 
-    public ElementFactory(Map<String, ProcessingElement> elementMap) {
-        this.elementMap = elementMap;
-
+    public ElementFactory() {
+       elementMap = new HashMap<>();
+        elementMap.put("Adder",new Adder());
+        elementMap.put("Subtractor",new Subtractor());
+        elementMap.put("Divider", new Divider());
+        elementMap.put("Multiplier", new Multiplier());
     }
 
     public abstract Optional<ProcessingElement> create(final String operator);
